@@ -1,0 +1,7 @@
+.table-row {
+    display: table-row; /* Correct display for tr */
+}
+
+.table-data {
+    display: table-cell;
+}

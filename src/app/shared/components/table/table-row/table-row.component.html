@@ -1,1 +1,3 @@
-<p>table-row works!</p>
+<tr class="table-row">
+    <td class="table-data" *ngFor="let column of columns">{{ row[column.key] }}</td>
+</tr>

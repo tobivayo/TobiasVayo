@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
+import { ProductsComponent } from './features/products/products.component';
 
 export const routes: Routes = [
     {
         path: '',
         title: 'home',
         pathMatch: 'full',
-        component: ContentLayoutComponent
+        component: ProductsComponent
     }
 ];
