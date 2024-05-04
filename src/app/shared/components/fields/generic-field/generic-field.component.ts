@@ -16,11 +16,11 @@ export class GenericFieldComponent {
   @Input() type: string = 'text';
   @Input() placeholder: string = '';
   @Input() isDisabled: boolean = false;
-  @Input() isRequired: boolean = false;
   @Input() isReadOnly: boolean = false;
-  @Input() minLength: number | null = null;
-  @Input() maxLength: number | null = null;
-  @Input() pattern: string | null = null;
+  public isRequired: boolean = false;
+  public minLength: number | null = null;
+  public maxLength: number | null = null;
+  public pattern: string | null = null;
   @Output() change: EventEmitter<any> = new EventEmitter();
 
   ngOnInit(): void {
