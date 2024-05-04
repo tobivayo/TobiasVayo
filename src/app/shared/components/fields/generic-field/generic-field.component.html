@@ -1,1 +1,22 @@
-<p>generic-field works!</p>
+<label>
+    <span>
+        {{ label }}{{ isRequired ? '*' : null}}
+    </span>
+    <input 
+        [formControl]="formField"
+        [type]="type"
+        [placeholder]="placeholder"
+        [required]="isRequired"
+        [attr.minlength]="minLength"
+        [attr.maxlength]="maxLength"
+        [attr.pattern]="pattern"
+        (change)="onChange($event)"
+        (input)="checkValidators()"
+        [class.is-invalid]="formField.invalid && (formField.dirty || formField.touched)">
+</label>
+<div *ngIf="formField.errors && (formField.dirty || formField.touched)" class="error-messages">
+    <span *ngIf="formField.errors['required']">Este campo es requerido.</span>
+    <span *ngIf="formField.errors['minlength']">El campo debe contener al menos {{ minLength }} caracteres.</span>
+    <span *ngIf="formField.errors['maxlength']">El campo debe contenter máximo {{ maxLength }} caracteres.</span>
+    <span *ngIf="formField.errors['pattern']">Formato inválido.</span>
+</div>

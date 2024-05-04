@@ -5,6 +5,7 @@ import { TableViewComponent } from '../../shared/components/table/table-view/tab
 import { EndpointsService } from '../../shared/services/endpoints.service';
 import { ITableColumn, productTableColumnsMock } from '../../shared/types/ITable.model';
 import { IProduct, productsMock } from '../../shared/types/IProduct.model';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-products',
@@ -18,18 +19,17 @@ export class ProductsComponent implements OnInit{
   public productTableColumns: ITableColumn[] = productTableColumnsMock;
   public products: IProduct[] = productsMock;
 
+  public formField: FormControl = new FormControl('');
+
   constructor(
     private _endpoints: EndpointsService
   ) {}
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this._getProducts();
   }
 
   private _getProducts(): void {
-    console.log('get products');
     this._endpoints.getProducts().subscribe({
       next: (response) => {
         console.log('products', response);
@@ -38,6 +38,10 @@ export class ProductsComponent implements OnInit{
         console.log('prod error', error);
       }
     });
+  }
+  
+  public onFieldChange(): void {
+    console.log('field change', this.formField.value);
   }
 
   public onButtonClick(): void {

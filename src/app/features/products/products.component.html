@@ -1,4 +1,4 @@
-<app-generic-field></app-generic-field>
+<app-generic-field [label]="'Busqueda'" [placeholder]="'Search'" [formField]="formField" (change)="onFieldChange()"></app-generic-field>
 <app-generic-button [buttonText]="'Agregar'" [buttonColor]="'#F1E079'" [isDisabled]="false" (onClick)="onButtonClick()"></app-generic-button>
 <app-generic-button [buttonText]="'Quitar'" [buttonColor]="'#F1E079'" [isDisabled]="true" (onClick)="onButtonClick()"></app-generic-button>
 <app-table-view [columns]="productTableColumns" [data]="products"></app-table-view>
