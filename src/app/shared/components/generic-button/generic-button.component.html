@@ -1,1 +1,4 @@
-<p>generic-button works!</p>
+<button [ngStyle]="{'background-color': buttonColor}" [disabled]="isDisabled" (click)="onClick.emit()">
+    {{ buttonText }}
+</button>
+  

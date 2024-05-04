@@ -1,0 +1,13 @@
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: #404651;
+    cursor: pointer;
+    font-weight: bold;
+    &:disabled {
+        filter: grayscale(1);
+        cursor: default;
+    }
+  }
+  

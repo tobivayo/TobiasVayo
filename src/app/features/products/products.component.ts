@@ -39,4 +39,8 @@ export class ProductsComponent implements OnInit{
       }
     });
   }
+
+  public onButtonClick(): void {
+    console.log('button clicked');
+  }
 }
