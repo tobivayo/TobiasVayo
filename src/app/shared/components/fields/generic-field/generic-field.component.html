@@ -10,6 +10,9 @@
         [attr.minlength]="minLength"
         [attr.maxlength]="maxLength"
         [attr.pattern]="pattern"
+        [attr.minDate]="minDate"
+        [disabled]="isDisabled"
+        [readOnly]="isDisabled"
         (change)="onChange($event)"
         (input)="checkValidators()"
         [class.is-invalid]="formField.invalid && (formField.dirty || formField.touched)">
@@ -19,4 +22,8 @@
     <span *ngIf="formField.errors['minlength']">El campo debe contener al menos {{ minLength }} caracteres.</span>
     <span *ngIf="formField.errors['maxlength']">El campo debe contenter máximo {{ maxLength }} caracteres.</span>
     <span *ngIf="formField.errors['pattern']">Formato inválido.</span>
+    <span *ngIf="formField.errors['min']">El valor no puede ser menor a {{ min }}.</span>
+    <span *ngIf="formField.errors['max']">El valor no puede ser menor a {{ max }}.</span>
+    <span *ngIf="formField.errors['minDate']">La fecha no puede ser menor a {{ minDate | date: 'dd-MM-yyyy'}}.</span>
+    <span *ngIf="formField.errors['idTaken']">El ID no es único.</span>
 </div>

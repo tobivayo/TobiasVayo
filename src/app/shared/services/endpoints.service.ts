@@ -12,4 +12,8 @@ export class EndpointsService {
   public getProducts(): Observable<any> {
     return this._http.get<any>('https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/bp/products');
   }
+
+  public getIdExists(id: string): Observable<boolean> {
+    return this._http.get<boolean>(`https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/bp/products/verification?id=${id}`)
+  }
 }

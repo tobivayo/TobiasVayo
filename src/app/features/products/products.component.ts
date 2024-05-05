@@ -5,7 +5,8 @@ import { TableViewComponent } from '../../shared/components/table/table-view/tab
 import { EndpointsService } from '../../shared/services/endpoints.service';
 import { ITableColumn, productTableColumnsMock } from '../../shared/types/ITable.model';
 import { IProduct, productsMock } from '../../shared/types/IProduct.model';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -22,7 +23,8 @@ export class ProductsComponent implements OnInit{
   public formField: FormControl = new FormControl('');
 
   constructor(
-    private _endpoints: EndpointsService
+    private _endpoints: EndpointsService,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -46,5 +48,6 @@ export class ProductsComponent implements OnInit{
 
   public onButtonClick(): void {
     console.log('button clicked');
+    this._router.navigateByUrl('/create');
   }
 }

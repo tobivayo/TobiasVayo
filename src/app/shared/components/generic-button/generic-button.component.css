@@ -2,11 +2,12 @@ button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
+    width: 100%;
     color: #404651;
     cursor: pointer;
     font-weight: bold;
     &:disabled {
-        filter: grayscale(1);
+        filter: grayscale(0.3);
         cursor: default;
     }
   }

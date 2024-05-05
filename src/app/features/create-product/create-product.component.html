@@ -1,0 +1,17 @@
+
+<form [formGroup]="form" class="form-container">
+    <h1>
+        Formulario de Registro
+    </h1>
+    <hr>
+    <div class="fields-container">
+        <div *ngFor="let field of formConfig.fields" class="field-container">
+            <app-generic-field [formField]="getFormControl(field.key)" [label]="field.label" [type]="field.type" [isRequired]="field.validations.required || false" [isDisabled]="field.isDisabled"></app-generic-field>
+        </div>
+    </div>
+  
+    <div class="buttons-container">
+        <app-generic-button [buttonText]="'Cancelar'" [buttonColor]="'#EAECF1'" (onClick)="cancelForm()"></app-generic-button>
+        <app-generic-button [buttonText]="'Enviar'" [buttonColor]="'#F1E079'" [isDisabled]="form.invalid" (onClick)="submitForm()"></app-generic-button>
+    </div>
+</form>

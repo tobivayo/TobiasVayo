@@ -4,7 +4,7 @@ label {
 }
   
 input {
-    width: 100%;
+    width: calc(100% - 16px);
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;

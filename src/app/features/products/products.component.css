@@ -1,0 +1,11 @@
+.view-container {
+    padding: 5%;
+
+}
+
+.products-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: end;
+}
