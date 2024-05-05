@@ -4,7 +4,7 @@ import { GenericFieldComponent } from '../../shared/components/fields/generic-fi
 import { TableViewComponent } from '../../shared/components/table/table-view/table-view.component';
 import { EndpointsService } from '../../shared/services/endpoints.service';
 import { ITableColumn, productTableColumnsMock } from '../../shared/types/ITable.model';
-import { IProduct, productsMock } from '../../shared/types/IProduct.model';
+import { IProduct } from '../../shared/types/IProduct.model';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -18,7 +18,8 @@ import { Router } from '@angular/router';
 export class ProductsComponent implements OnInit{
 
   public productTableColumns: ITableColumn[] = productTableColumnsMock;
-  public products: IProduct[] = productsMock;
+  public products: IProduct[] = [];
+  public filteredProducts: IProduct[] = [];
 
   public formField: FormControl = new FormControl('');
 
@@ -29,13 +30,18 @@ export class ProductsComponent implements OnInit{
 
   ngOnInit(): void {
     this._getProducts();
+    this.formField.valueChanges.subscribe({
+      next: () => {
+        this.onFieldChange();
+      }
+    });
   }
 
   private _getProducts(): void {
     this._endpoints.getProducts().subscribe({
       next: (response) => {
-        console.log('products', response);
         this.products = response;
+        this.filteredProducts = this.products
       },
       error: (error) => {
         console.log('prod error', error);
@@ -44,7 +50,9 @@ export class ProductsComponent implements OnInit{
   }
   
   public onFieldChange(): void {
-    console.log('field change', this.formField.value);
+    this.filteredProducts = this.products.filter((product) => {
+      return product.name.toLowerCase().includes(this.formField.value.toLowerCase());
+    });
   }
 
   public onButtonClick(): void {

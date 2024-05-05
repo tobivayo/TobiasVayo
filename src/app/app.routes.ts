@@ -14,5 +14,11 @@ export const routes: Routes = [
         title: 'New Product',
         pathMatch: 'full',
         component: ProductFormComponent
+    },
+    {
+        path: 'edit/:id',
+        title: 'Edit Product',
+        pathMatch: 'full',
+        component: ProductFormComponent
     }
 ];

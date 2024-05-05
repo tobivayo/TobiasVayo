@@ -1,7 +1,8 @@
 export enum ColumnType {
     String = 'string',
     Image = 'image',
-    Date = 'date'
+    Date = 'date',
+    Actions = 'actions'
 }
 
 export interface ITableColumn {
@@ -40,5 +41,10 @@ export const productTableColumnsMock: ITableColumn[] = [
         key: 'dateRevision',
         title: 'Date of Revision',
         type: ColumnType.Date
+    },
+    {
+        key: 'actions',
+        title: '',
+        type: ColumnType.Actions
     }
 ];

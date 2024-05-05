@@ -1,0 +1,31 @@
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item">
+            <span class="page-link">
+                {{ totalItems < itemsPerPage ? totalItems : itemsPerPage }} resultados
+            </span>
+        </li>
+
+        <ng-container *ngIf="totalItems > itemsPerPage">
+            <li class="page-item">
+                <app-generic-button [buttonText]="'Previous'" [isDisabled]="currentPage === 1" (onClick)="previousPage()"></app-generic-button>
+            </li>
+    
+            <li class="page-item">
+                <span class="page-link">Página {{ currentPage }} de {{ totalPages }}</span>
+            </li>
+    
+            <li class="page-item">
+                <app-generic-button [buttonText]="'Next'" [isDisabled]="currentPage === totalPages" (onClick)="nextPage()"></app-generic-button>
+            </li>
+        </ng-container>
+
+        <li class="page-item">
+            <select class="form-control" [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange()">
+                <option [value]="5">5</option>
+                <option [value]="10">10</option>
+                <option [value]="20">20</option>
+            </select>
+        </li>
+    </ul>
+</nav>

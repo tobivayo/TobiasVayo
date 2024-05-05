@@ -11,7 +11,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class GenericButtonComponent {
 
   @Input() buttonText: string = "Button";
-  @Input() buttonColor: string = "primary";
+  @Input() buttonColor: string = "#F1E079";
   @Input() isDisabled: boolean = false;
   @Output() onClick: EventEmitter<any> = new EventEmitter();
   

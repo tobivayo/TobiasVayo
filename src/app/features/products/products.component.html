@@ -1,9 +1,9 @@
 <div class="view-container">
     <div class="products-header">
-        <app-generic-field [label]="'Busqueda'" [placeholder]="'Search'" [formField]="formField" (change)="onFieldChange()"></app-generic-field>
+        <app-generic-field [label]="'Busqueda'" [placeholder]="'Search'" [formField]="formField"></app-generic-field>
         <app-generic-button [buttonText]="'Agregar'" [buttonColor]="'#F1E079'" [isDisabled]="false" (onClick)="onButtonClick()"></app-generic-button>
     </div>
     <div>
-        <app-table-view [columns]="productTableColumns" [data]="products"></app-table-view>
+        <app-table-view [columns]="productTableColumns" [data]="filteredProducts"></app-table-view>
     </div>
 </div>

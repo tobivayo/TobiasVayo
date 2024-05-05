@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { FormConfig, FormField } from '../types/IFormConfig';
+import { FormConfig, FormField } from '../types/IFormConfig.model';
 import { EndpointsService } from './endpoints.service';
 import { Observable, map, of } from 'rxjs';
 

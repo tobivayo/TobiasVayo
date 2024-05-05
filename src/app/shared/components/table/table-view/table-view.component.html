@@ -5,7 +5,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of data">
+    <tr *ngFor="let row of visibleData">
       <ng-container *ngFor="let column of columns">
           <ng-container [ngSwitch]="column.type">
               <td *ngSwitchCase="'string'" class="text-data" >{{ row[column.key] }}</td>
@@ -13,9 +13,14 @@
               <td *ngSwitchCase="'image'" class="image-data">
                   <app-logo-img [imgSrc]="row[column.key]"></app-logo-img>
               </td>
+              <td *ngSwitchCase="'actions'">
+                <app-menu [items]="row[column.key]"></app-menu>
+              </td>
           </ng-container>
       </ng-container> 
     </tr>
       <!-- <app-table-row *ngFor="let row of data" [columns]="columns" [row]="row"></app-table-row> -->
   </tbody>
 </table>
+
+<app-paginator [totalItems]="data.length" [itemsPerPage]="5" (pageChanged)="onPageChange($event)"></app-paginator>

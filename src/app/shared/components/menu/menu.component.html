@@ -1,0 +1,12 @@
+<div class="dropdown">
+    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="ph ph-dots-three-outline-vertical"></i>
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button class="dropdown-item" *ngFor="let item of items" (click)="onMenuItemClick(item)">
+            <i *ngIf="item.icon" class="{{item.icon}}"></i>
+            {{ item.label }}
+        </button>
+    </div>
+</div>
+  

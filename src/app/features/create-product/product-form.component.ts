@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormConfig } from '../../shared/types/IFormConfig';
+import { FormConfig } from '../../shared/types/IFormConfig.model';
 import { FormService } from '../../shared/services/form.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GenericFieldComponent } from '../../shared/components/fields/generic-field/generic-field.component';

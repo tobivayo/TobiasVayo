@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IBackProduct, IProduct } from '../types/IProduct.model';
+import { ActionType } from '../types/IMenu.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,26 @@ export class ObjectsMapperService {
       description: product.description,
       logo: product.logo,
       dateRelease: product.date_release,
-      dateRevision: product.date_revision
+      dateRevision: product.date_revision,
+      actions: [
+        {
+          label: 'Edit',
+          action: () => console.log('Editing item', product.id),
+          icon: 'ph ph-pencil',
+          type: ActionType.Navigate,
+          route: `/edit/${product.id}` 
+        },
+        {
+          label: 'Delete',
+          action: () => console.log('Deleting item', product.id),
+          icon: 'ph ph-trash',
+          type: ActionType.Dialog,
+          data: {
+            id: product.id,
+            name: product.name
+          }
+        }
+      ]
     };
   }
 

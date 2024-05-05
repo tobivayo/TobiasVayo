@@ -1,3 +1,5 @@
+import { IMenuItem } from "./IMenu.model";
+
 export interface IProduct {
     id: string;
     name: string;
@@ -5,6 +7,7 @@ export interface IProduct {
     logo: string;
     dateRelease: Date;
     dateRevision: Date;
+    actions?: IMenuItem[];
 }
 
 export interface IBackProduct {
