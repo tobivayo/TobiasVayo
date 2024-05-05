@@ -1,22 +1,21 @@
 <table>
-    <thead>
-      <tr>
-        <th *ngFor="let column of columns">{{ column.title }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let row of data">
-        <ng-container *ngFor="let column of columns">
-            <ng-container [ngSwitch]="column.type">
-                <td *ngSwitchCase="'string'" class="text-data" >{{ row[column.key] }}</td>
-                <td *ngSwitchCase="'date'" class="date-data">{{ row[column.key] | date: 'dd/MM/yyyy'}}</td>
-                <td *ngSwitchCase="'image'" class="image-data">
-                    <app-logo-img [imgSrc]="row[column.key]"></app-logo-img>
-                </td>
-            </ng-container>
-        </ng-container>
-        
-      </tr>
+  <thead>
+    <tr>
+      <th *ngFor="let column of columns">{{ column.title }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of data">
+      <ng-container *ngFor="let column of columns">
+          <ng-container [ngSwitch]="column.type">
+              <td *ngSwitchCase="'string'" class="text-data" >{{ row[column.key] }}</td>
+              <td *ngSwitchCase="'date'" class="date-data">{{ row[column.key] | date: 'dd/MM/yyyy'}}</td>
+              <td *ngSwitchCase="'image'" class="image-data">
+                  <app-logo-img [imgSrc]="row[column.key]"></app-logo-img>
+              </td>
+          </ng-container>
+      </ng-container> 
+    </tr>
       <!-- <app-table-row *ngFor="let row of data" [columns]="columns" [row]="row"></app-table-row> -->
-    </tbody>
-  </table>
+  </tbody>
+</table>

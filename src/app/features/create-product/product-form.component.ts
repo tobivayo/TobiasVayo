@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormViewComponent } from '../../shared/components/form-view/form-view.component';
 import { FormConfig } from '../../shared/types/IFormConfig';
 import { FormService } from '../../shared/services/form.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -7,15 +6,16 @@ import { GenericFieldComponent } from '../../shared/components/fields/generic-fi
 import { GenericButtonComponent } from '../../shared/components/generic-button/generic-button.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { EndpointsService } from '../../shared/services/endpoints.service';
 
 @Component({
   selector: 'app-create-product',
   standalone: true,
   imports: [ CommonModule, GenericFieldComponent, GenericButtonComponent, ReactiveFormsModule, FormsModule ],
-  templateUrl: './create-product.component.html',
-  styleUrl: './create-product.component.css'
+  templateUrl: './product-form.component.html',
+  styleUrl: './product-form.component.css'
 })
-export class CreateProductComponent {
+export class ProductFormComponent {
   public formConfig: FormConfig = {
     fields: [
       {
@@ -34,7 +34,7 @@ export class CreateProductComponent {
         }
       },
       {
-        key: 'nombre',
+        key: 'name',
         label: 'Nombre',
         type: 'text',
         value: '',
@@ -47,7 +47,7 @@ export class CreateProductComponent {
         asyncValidations: {}
       },
       {
-        key: 'descripcion',
+        key: 'description',
         label: 'Descripción',
         type: 'text',
         value: '',
@@ -71,7 +71,7 @@ export class CreateProductComponent {
         asyncValidations: {}
       },
       {
-        key: 'fechaLiberacion',
+        key: 'dateRelease',
         label: 'Fecha de Liberación',
         type: 'date',
         value: new Date().toISOString().substring(0, 10),
@@ -83,7 +83,7 @@ export class CreateProductComponent {
         asyncValidations: {}
       },
       {
-        key: 'fechaRevision',
+        key: 'dateRevision',
         label: 'Fecha de Revisión',
         type: 'date',
         value: this._getDateInOneYear(),
@@ -99,7 +99,7 @@ export class CreateProductComponent {
 
   public form: FormGroup;
 
-  constructor( private _formService: FormService, private _router: Router) {}
+  constructor( private _formService: FormService, private _router: Router, private _endpoints: EndpointsService ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -108,8 +108,8 @@ export class CreateProductComponent {
   private createForm() {
     this.form = this._formService.createForm(this.formConfig);
 
-    this.form.get('fechaLiberacion')?.valueChanges.subscribe( value => {
-      this.form.get('fechaRevision')?.setValue(this._getDateInOneYear(new Date(value)));
+    this.form.get('dateRelease')?.valueChanges.subscribe( value => {
+      this.form.get('dateRevision')?.setValue(this._getDateInOneYear(new Date(value)));
     });
   }
 
@@ -129,5 +129,11 @@ export class CreateProductComponent {
 
   public submitForm() {
     console.log('form submitted', this.form.value);
+    this._endpoints.createProduct(this.form.value).subscribe({
+      next: res => {
+        console.log(res);
+        this._router.navigateByUrl('/');
+      }
+    })
   }
 }

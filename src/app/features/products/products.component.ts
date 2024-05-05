@@ -35,6 +35,7 @@ export class ProductsComponent implements OnInit{
     this._endpoints.getProducts().subscribe({
       next: (response) => {
         console.log('products', response);
+        this.products = response;
       },
       error: (error) => {
         console.log('prod error', error);
