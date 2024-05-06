@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductFormComponent } from './product-form.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BehaviorSubject } from 'rxjs';
+import { ActivatedRoute, provideRouter } from '@angular/router';
+
 
 describe('ProductFormComponent', () => {
   let component: ProductFormComponent;
@@ -8,7 +12,13 @@ describe('ProductFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductFormComponent]
+      imports: [
+        ProductFormComponent,
+        HttpClientTestingModule
+      ],
+      providers: [
+        provideRouter([{ path: '**', component: ProductFormComponent }])
+      ],
     })
     .compileComponents();
     

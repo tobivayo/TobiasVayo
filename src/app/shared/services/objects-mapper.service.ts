@@ -24,14 +24,14 @@ export class ObjectsMapperService {
       actions: [
         {
           label: 'Edit',
-          action: () => console.log('Editing item', product.id),
+          action: () => {},
           icon: 'ph ph-pencil',
           type: ActionType.Navigate,
           route: `/edit/${product.id}` 
         },
         {
           label: 'Delete',
-          action: () => console.log('Deleting item', product.id),
+          action: () => {},
           icon: 'ph ph-trash',
           type: ActionType.Dialog,
           data: {
