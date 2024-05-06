@@ -7,6 +7,7 @@ import { ITableColumn, productTableColumnsMock } from '../../shared/types/ITable
 import { IProduct } from '../../shared/types/IProduct.model';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { GlobalStoreService } from '../../core/store/global-store.service';
 
 @Component({
   selector: 'app-products',

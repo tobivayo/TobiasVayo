@@ -13,9 +13,15 @@ export class EndpointsService {
 
   constructor(private _http: HttpClient, private _mapper: ObjectsMapperService ) { }
 
-  public getProducts(): Observable<any> {
-    return this._http.get<any>(BASE_URL).pipe(
+  public getProducts(): Observable<IProduct[]> {
+    return this._http.get<IBackProduct[]>(BASE_URL).pipe(
       map( res => this._mapper.productListFromBack(res))
+    );
+  }
+
+  public getProductById(id: string): Observable<IProduct | undefined> {
+    return this._http.get<IBackProduct[]>(BASE_URL).pipe(
+      map( res => this._mapper.productListFromBack(res).find(p => p.id === id))
     );
   }
   

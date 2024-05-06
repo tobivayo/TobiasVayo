@@ -5,8 +5,9 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { GenericFieldComponent } from '../../shared/components/fields/generic-field/generic-field.component';
 import { GenericButtonComponent } from '../../shared/components/generic-button/generic-button.component';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EndpointsService } from '../../shared/services/endpoints.service';
+import { ProductsService } from '../../shared/services/products.service';
 
 @Component({
   selector: 'app-create-product',
@@ -16,107 +17,30 @@ import { EndpointsService } from '../../shared/services/endpoints.service';
   styleUrl: './product-form.component.css'
 })
 export class ProductFormComponent {
-  public formConfig: FormConfig = {
-    fields: [
-      {
-        key: 'id',
-        label: 'Id',
-        type: 'text',
-        value: '',
-        isDisabled: false,
-        validations: {
-          required: true,
-          minlength: 3,
-          maxlength: 10
-        },
-        asyncValidations: {
-          uniqueId: true
-        }
-      },
-      {
-        key: 'name',
-        label: 'Nombre',
-        type: 'text',
-        value: '',
-        isDisabled: false,
-        validations: {
-          required: true,
-          minlength: 5,
-          maxlength: 100
-        },
-        asyncValidations: {}
-      },
-      {
-        key: 'description',
-        label: 'Descripción',
-        type: 'text',
-        value: '',
-        isDisabled: false,
-        validations: {
-          required: true,
-          minlength: 10,
-          maxlength: 200
-        },
-        asyncValidations: {}
-      },
-      {
-        key: 'logo',
-        label: 'Logo',
-        type: 'text',
-        value: '',
-        isDisabled: false,
-        validations: {
-          required: true
-        },
-        asyncValidations: {}
-      },
-      {
-        key: 'dateRelease',
-        label: 'Fecha de Liberación',
-        type: 'date',
-        value: new Date().toISOString().substring(0, 10),
-        isDisabled: false,
-        validations: {
-          required: true,
-          minDate: new Date()
-        },
-        asyncValidations: {}
-      },
-      {
-        key: 'dateRevision',
-        label: 'Fecha de Revisión',
-        type: 'date',
-        value: this._getDateInOneYear(),
-        isDisabled: true,
-        validations: {
-          required: true,
-          minDate: new Date()
-        },
-        asyncValidations: {}
-      }
-    ]
-  };
-
+  public formConfig: FormConfig;
   public form: FormGroup;
+  private _isEdit: boolean = false;
 
-  constructor( private _formService: FormService, private _router: Router, private _endpoints: EndpointsService ) {}
+  constructor( private _formService: FormService, private _router: Router, private _activatedRoute: ActivatedRoute, private _endpoints: EndpointsService, private _productService: ProductsService ) {}
 
   ngOnInit(): void {
     this.createForm();
   }
 
   private createForm() {
-    this.form = this._formService.createForm(this.formConfig);
-
-    this.form.get('dateRelease')?.valueChanges.subscribe( value => {
-      this.form.get('dateRevision')?.setValue(this._getDateInOneYear(new Date(value)));
-    });
-  }
-
-  private _getDateInOneYear(value: Date = new Date()): string {
-    let newValue = value;
-    newValue.setFullYear(value.getFullYear() + 1);
-    return newValue.toISOString().substring(0,10);
+    const id = this._activatedRoute.snapshot.params['id'];
+    this._isEdit = Boolean(id);
+    this._productService.createProductFormConfig(id).then((formConfig) => {
+      this.formConfig = formConfig;
+      
+      this.form = this._formService.createForm(this.formConfig);
+      console.log('formulario', this.form);
+  
+      this.form.get('dateRelease')?.valueChanges.subscribe( value => {
+        this.form.get('dateRevision')?.setValue(this._productService.getDateInOneYear(new Date(value)));
+        console.log('form value', this.form.get('dateRevision')?.value);
+      });
+    })
   }
 
   public getFormControl(key: string): FormControl {
@@ -128,12 +52,21 @@ export class ProductFormComponent {
   }
 
   public submitForm() {
-    console.log('form submitted', this.form.value);
-    this._endpoints.createProduct(this.form.value).subscribe({
-      next: res => {
-        console.log(res);
-        this._router.navigateByUrl('/');
-      }
-    })
+    const formValue = this._productService.getProductFromFormControls(this.form);
+    if (this._isEdit) {
+      this._endpoints.updateProduct(formValue).subscribe({
+        next: res => {
+          console.log(res);
+          this._router.navigateByUrl('/');
+        }
+      })
+    } else {
+      this._endpoints.createProduct(formValue).subscribe({
+        next: res => {
+          console.log(res);
+          this._router.navigateByUrl('/');
+        }
+      })
+    }
   }
 }

@@ -27,7 +27,6 @@ export class GenericFieldComponent {
   @Output() change: EventEmitter<any> = new EventEmitter();
 
   ngOnInit(): void {
-    console.log('field', this.type)
     this.checkControlValidators()
   }
 
@@ -58,7 +57,7 @@ export class GenericFieldComponent {
     }
   }
   
-  public onChange(event: any) {
+  public onChange() {
     this.change.emit();
   }
 }

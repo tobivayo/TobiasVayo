@@ -15,6 +15,7 @@ export class PaginatorComponent {
   @Input() totalItems: number = 0;
   @Input() itemsPerPage: number = 5;
   @Output() pageChanged = new EventEmitter<number>();
+  @Output() itemsPerPageChanged = new EventEmitter<number>();
 
   currentPage: number = 1;
 
@@ -28,6 +29,10 @@ export class PaginatorComponent {
 
   get endIndex(): number {
     return Math.min(this.startIndex + this.itemsPerPage, this.totalItems);
+  }
+
+  get itemsInPage(): number {
+    return this.endIndex - this.startIndex;
   }
 
   nextPage(): void {
@@ -46,5 +51,6 @@ export class PaginatorComponent {
 
   onItemsPerPageChange(): void {
     this.currentPage = 1;
+    this.itemsPerPageChanged.emit(this.itemsPerPage);
   }
 }

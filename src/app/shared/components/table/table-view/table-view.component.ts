@@ -16,21 +16,33 @@ import { MenuComponent } from '../../menu/menu.component';
 export class TableViewComponent implements OnInit, OnChanges {
   @Input() columns: ITableColumn[] = [];
   @Input() data: ITableData[] = [];
-  @Input() itemsPerPage: number = 10;
+  @Input() itemsPerPage: number = 5;
+  public currentPage: number = 1;
   public visibleData: ITableData[] = [];
 
   ngOnInit(): void {
-    this.visibleData = this.data;
+    this.setVisibleData();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {
-      this.visibleData = this.data;
+      this.setVisibleData();
     }
   }
+
+  public changePage(page: number): void {
+    this.currentPage = page;
+    this.setVisibleData();
+  }
+
+  public itemsPerPageChange(items: number) {
+    this.itemsPerPage = items;
+    this.currentPage = 1;
+    this.setVisibleData();
+  }
   
-  onPageChange(page: number): void {
-    const startIndex = (page - 1) * this.itemsPerPage;
+  setVisibleData(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.visibleData = this.data.slice(startIndex, endIndex);
   }

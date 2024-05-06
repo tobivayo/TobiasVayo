@@ -17,7 +17,11 @@ export class FormService {
     formConfig.fields.forEach(field => {
       let validators = this.getValidators(field);
       let asyncValidators = this.getAsyncValidators(field);
-      group[field.key] = [field.value, validators, asyncValidators];
+      const state = {
+        value: field.value,
+        disabled: field.isDisabled
+      };
+      group[field.key] = [state, validators, asyncValidators];
     });
 
     return this._fb.group(group);

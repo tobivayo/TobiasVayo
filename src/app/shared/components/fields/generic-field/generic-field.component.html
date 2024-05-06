@@ -11,9 +11,8 @@
         [attr.maxlength]="maxLength"
         [attr.pattern]="pattern"
         [attr.minDate]="minDate"
-        [disabled]="isDisabled"
         [readOnly]="isDisabled"
-        (change)="onChange($event)"
+        (change)="onChange()"
         (input)="checkValidators()"
         [class.is-invalid]="formField.invalid && (formField.dirty || formField.touched)">
 </label>

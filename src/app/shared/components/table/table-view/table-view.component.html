@@ -19,8 +19,8 @@
           </ng-container>
       </ng-container> 
     </tr>
-      <!-- <app-table-row *ngFor="let row of data" [columns]="columns" [row]="row"></app-table-row> -->
+      <!-- <app-table-row *ngFor="let row of visibleData" [columns]="columns" [row]="row"></app-table-row> -->
   </tbody>
 </table>
 
-<app-paginator [totalItems]="data.length" [itemsPerPage]="5" (pageChanged)="onPageChange($event)"></app-paginator>
+<app-paginator [totalItems]="data.length" [itemsPerPage]="itemsPerPage" (pageChanged)="changePage($event)" (itemsPerPageChanged)="itemsPerPageChange($event)"></app-paginator>
