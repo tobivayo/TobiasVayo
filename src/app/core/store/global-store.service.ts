@@ -18,4 +18,11 @@ export class GlobalStoreService extends Store<GlobalStoreState> {
       products: newProducts
     });
   }
+
+  removeProductById(id: string) {
+    this.setState({
+     ...this.currentStateValue,
+      products: this.currentStateValue.products.filter(p => p.id!= id)
+    });
+  }
 }

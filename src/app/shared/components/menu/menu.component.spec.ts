@@ -4,6 +4,7 @@ import { MenuComponent } from './menu.component';
 import { Router } from '@angular/router';
 import { ActionType } from '../../types/IMenu.model';
 import { menuItemListMock } from '../../mocks/MenuItem.mock';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
@@ -14,7 +15,7 @@ describe('MenuComponent', () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
 
     await TestBed.configureTestingModule({
-      imports: [MenuComponent],
+      imports: [MenuComponent, HttpClientTestingModule],
       providers: [
         { provide: Router, useValue: routerSpy }
       ]

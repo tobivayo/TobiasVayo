@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { IBackProduct, IProduct } from '../types/IProduct.model';
@@ -40,7 +40,10 @@ export class EndpointsService {
   }
 
   public deleteProduct(id: string): Observable<any> {
-    return this._http.delete<any>(`${BASE_URL}?id=${id}`);
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+
+    return this._http.delete(`${BASE_URL}?id=${id}`, { headers, responseType: 'text'}
+  );
   }
 
   public getIdExists(id: string): Observable<boolean> {

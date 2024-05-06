@@ -3,7 +3,7 @@ button {
     border: none;
     border-radius: 5px;
     width: 100%;
-    color: #404651;
+    color: #010045;
     cursor: pointer;
     font-weight: bold;
     &:disabled {

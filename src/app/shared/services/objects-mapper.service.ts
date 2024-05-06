@@ -33,7 +33,7 @@ export class ObjectsMapperService {
           label: 'Delete',
           action: () => {},
           icon: 'ph ph-trash',
-          type: ActionType.Dialog,
+          type: ActionType.Delete,
           data: {
             id: product.id,
             name: product.name

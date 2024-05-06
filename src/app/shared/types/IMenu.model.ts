@@ -1,6 +1,7 @@
 export enum ActionType {
     Navigate = 'navigate',
     Dialog = 'dialog',
+    Delete = 'delete',
     Custom = 'custom'
 }
 

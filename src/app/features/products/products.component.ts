@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { GlobalStoreService } from '../../core/store/global-store.service';
 import { AlertService } from '../../shared/services/alert.service';
 import { AlertTypes } from '../../shared/types/IAlert.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -23,14 +24,23 @@ export class ProductsComponent implements OnInit{
   public productTableColumns: ITableColumn[] = productTableColumnsMock;
   public products: IProduct[] = [];
   public filteredProducts: IProduct[] = [];
+  private productSubscription: Subscription;
 
   public formField: FormControl = new FormControl('');
 
   constructor(
     private _endpoints: EndpointsService,
     private _router: Router,
-    private _alert: AlertService
-  ) {}
+    private _alert: AlertService,
+    private _store: GlobalStoreService
+  ) {
+    this.productSubscription = this._store.state$.subscribe({
+      next: (state) => {
+        this.products = state.products;
+        this.filteredProducts = this.products;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this._getProducts();
@@ -41,11 +51,14 @@ export class ProductsComponent implements OnInit{
     });
   }
 
+  ngOnDestroy(): void {
+    this.productSubscription.unsubscribe();
+  }
+
   private _getProducts(): void {
     this._endpoints.getProducts().subscribe({
       next: (response) => {
-        this.products = response;
-        this.filteredProducts = this.products
+        this._store.updateProducts(response);
       },
       error: (error) => {
         this._alert.showAlert({

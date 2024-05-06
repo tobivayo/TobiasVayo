@@ -7,6 +7,7 @@ import { By } from '@angular/platform-browser';
 import { LogoImgComponent } from '../../logo-img/logo-img.component';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { productsMock } from '../../../mocks/Product.mock';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('TableViewComponent', () => {
   let component: TableViewComponent;
@@ -14,7 +15,7 @@ describe('TableViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TableViewComponent, CommonModule]
+      imports: [TableViewComponent, CommonModule, HttpClientTestingModule]
     })
     .compileComponents();
     
