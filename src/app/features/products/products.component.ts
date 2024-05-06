@@ -8,6 +8,8 @@ import { IProduct } from '../../shared/types/IProduct.model';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GlobalStoreService } from '../../core/store/global-store.service';
+import { AlertService } from '../../shared/services/alert.service';
+import { AlertTypes } from '../../shared/types/IAlert.model';
 
 @Component({
   selector: 'app-products',
@@ -26,7 +28,8 @@ export class ProductsComponent implements OnInit{
 
   constructor(
     private _endpoints: EndpointsService,
-    private _router: Router
+    private _router: Router,
+    private _alert: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -45,6 +48,10 @@ export class ProductsComponent implements OnInit{
         this.filteredProducts = this.products
       },
       error: (error) => {
+        this._alert.showAlert({
+          type: AlertTypes.Danger,
+          message: 'Ocurrió un error al buscar los productos'
+        })
         console.log('prod error', error);
       }
     });
@@ -57,7 +64,6 @@ export class ProductsComponent implements OnInit{
   }
 
   public onButtonClick(): void {
-    console.log('button clicked');
     this._router.navigateByUrl('/create');
   }
 }

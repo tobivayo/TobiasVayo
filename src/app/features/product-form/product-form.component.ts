@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormConfig } from '../../shared/types/IFormConfig.model';
+import { IFormConfig } from '../../shared/types/IFormConfig.model';
 import { FormService } from '../../shared/services/form.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GenericFieldComponent } from '../../shared/components/fields/generic-field/generic-field.component';
@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EndpointsService } from '../../shared/services/endpoints.service';
 import { ProductsService } from '../../shared/services/products.service';
+import { AlertService } from '../../shared/services/alert.service';
+import { AlertTypes } from '../../shared/types/IAlert.model';
 
 @Component({
   selector: 'app-create-product',
@@ -17,11 +19,18 @@ import { ProductsService } from '../../shared/services/products.service';
   styleUrl: './product-form.component.css'
 })
 export class ProductFormComponent {
-  public formConfig: FormConfig;
+  public formConfig: IFormConfig;
   public form: FormGroup;
   private _isEdit: boolean = false;
 
-  constructor( private _formService: FormService, private _router: Router, private _activatedRoute: ActivatedRoute, private _endpoints: EndpointsService, private _productService: ProductsService ) {}
+  constructor( private _formService: FormService, 
+    private _router: Router, 
+    private _activatedRoute: ActivatedRoute, 
+    private _endpoints: EndpointsService, 
+    private _productService: ProductsService,
+    private _alert: AlertService ) {
+
+  }
 
   ngOnInit(): void {
     this.createForm();
@@ -34,11 +43,9 @@ export class ProductFormComponent {
       this.formConfig = formConfig;
       
       this.form = this._formService.createForm(this.formConfig);
-      console.log('formulario', this.form);
   
       this.form.get('dateRelease')?.valueChanges.subscribe( value => {
         this.form.get('dateRevision')?.setValue(this._productService.getDateInOneYear(new Date(value)));
-        console.log('form value', this.form.get('dateRevision')?.value);
       });
     })
   }
@@ -55,16 +62,36 @@ export class ProductFormComponent {
     const formValue = this._productService.getProductFromFormControls(this.form);
     if (this._isEdit) {
       this._endpoints.updateProduct(formValue).subscribe({
-        next: res => {
-          console.log(res);
+        next: () => {
           this._router.navigateByUrl('/');
+          this._alert.showAlert({
+            type: AlertTypes.Success,
+            message: `El producto ${formValue.name} actualizado correctamente.`
+          })
+        },
+        error: (error) => {
+          this._alert.showAlert({
+            type: AlertTypes.Danger,
+            message: 'Ocurrió un error al actualizar el producto, intente nuevamente.'
+          })
+          console.log('prod error', error);
         }
       })
     } else {
       this._endpoints.createProduct(formValue).subscribe({
-        next: res => {
-          console.log(res);
+        next: () => {
+          this._alert.showAlert({
+            type: AlertTypes.Success,
+            message: `El producto ${formValue.name} fue creado correctamente.`
+          })
           this._router.navigateByUrl('/');
+        },
+        error: (error) => {
+          this._alert.showAlert({
+            type: AlertTypes.Danger,
+            message: 'Ocurrió un error al crear el producto, intente nuevamente.'
+          })
+          console.log('prod error', error);
         }
       })
     }

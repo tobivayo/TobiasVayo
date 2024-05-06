@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { FormConfig, FormField } from '../types/IFormConfig.model';
+import { IFormConfig, IFormField } from '../types/IFormConfig.model';
 import { EndpointsService } from './endpoints.service';
 import { Observable, map, of } from 'rxjs';
 
@@ -11,7 +11,7 @@ export class FormService {
 
   constructor(private _fb: FormBuilder, private _endpoints: EndpointsService) { }
 
-  public createForm(formConfig: FormConfig): FormGroup {
+  public createForm(formConfig: IFormConfig): FormGroup {
     let group: any = {};
 
     formConfig.fields.forEach(field => {
@@ -27,7 +27,7 @@ export class FormService {
     return this._fb.group(group);
   }
 
-  private getValidators(field: FormField) {
+  private getValidators(field: IFormField) {
     let validators = [];
 
     if (field.validations) {
@@ -57,7 +57,7 @@ export class FormService {
     return validators;
   }
 
-  private getAsyncValidators(field: FormField): AsyncValidatorFn[] {
+  private getAsyncValidators(field: IFormField): AsyncValidatorFn[] {
     let validators = [];
     if (field.asyncValidations) {
       if (field.asyncValidations.uniqueId) {

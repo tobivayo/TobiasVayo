@@ -1,30 +1,36 @@
 import { Injectable } from '@angular/core';
 import { IProduct } from '../types/IProduct.model';
-import { FormConfig } from '../types/IFormConfig.model';
+import { IFormConfig } from '../types/IFormConfig.model';
 import { EndpointsService } from './endpoints.service';
 import { firstValueFrom } from 'rxjs';
 import { AbstractControl, FormControl } from '@angular/forms';
+import { AlertService } from './alert.service';
+import { AlertTypes } from '../types/IAlert.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
 
-  constructor(private _endpoints: EndpointsService) { }
+  constructor(private _endpoints: EndpointsService, private _alert: AlertService) { }
 
   public async getProductById(productId: string): Promise<IProduct | undefined> {
     try {
       return await firstValueFrom(this._endpoints.getProductById(productId));
   } catch (error) {
+      this._alert.showAlert({
+        type: AlertTypes.Danger,
+        message: 'Ocurrió un error al obtener el producto a editar.'
+      })
       console.error('Failed to fetch product', error);
       return undefined;
   }
   }
 
-  public async createProductFormConfig(id?: string): Promise<FormConfig> {
+  public async createProductFormConfig(id?: string): Promise<IFormConfig> {
     const product: IProduct | undefined = id ? await this.getProductById(id) : undefined;
 
-    const formConfig: FormConfig = {
+    const formConfig: IFormConfig = {
       fields: [
         {
           key: 'id',

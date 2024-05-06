@@ -1,4 +1,4 @@
-export interface FormField {
+export interface IFormField {
     key: string;
     label: string;
     type: string;
@@ -18,7 +18,7 @@ export interface FormField {
     isDisabled: boolean;
   }
   
-  export interface FormConfig {
-    fields: FormField[];
+  export interface IFormConfig {
+    fields: IFormField[];
   }
   
