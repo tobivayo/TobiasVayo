@@ -7,6 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "live-coverage": "ng test --code-coverage",
+    "create-coverage": "ng test --no-watch --code-coverage ",
     "serve:ssr:TobiasVayo": "node dist/tobias-vayo/server/server.mjs"
   },
   "private": true,

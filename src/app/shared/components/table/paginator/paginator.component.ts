@@ -35,21 +35,21 @@ export class PaginatorComponent {
     return this.endIndex - this.startIndex;
   }
 
-  nextPage(): void {
+  nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
       this.pageChanged.emit(this.currentPage);
     }
   }
 
-  previousPage(): void {
+  previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
       this.pageChanged.emit(this.currentPage);
     }
   }
 
-  onItemsPerPageChange(): void {
+  onItemsPerPageChange() {
     this.currentPage = 1;
     this.itemsPerPageChanged.emit(this.itemsPerPage);
   }

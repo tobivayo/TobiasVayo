@@ -68,7 +68,7 @@ export class FormService {
   }
 }
 
-function minDateValidator(minDate: Date): ValidatorFn {
+export function minDateValidator(minDate: Date): ValidatorFn {
   return (control: AbstractControl): {[key: string]: any} | null => {
     if (!control.value) {
       return null; 
@@ -83,7 +83,7 @@ function minDateValidator(minDate: Date): ValidatorFn {
   };
 }
 
-function uniqueUsernameValidator(service: EndpointsService): AsyncValidatorFn {
+export function uniqueUsernameValidator(service: EndpointsService): AsyncValidatorFn {
   return (control: AbstractControl): Promise<{[key: string]: any} | null> | Observable<{[key: string]: any} | null> => {
     if (!control.value) {
       return of(null);
