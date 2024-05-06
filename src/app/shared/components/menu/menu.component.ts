@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { ActionType, IMenuItem } from '../../types/IMenu.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { ModalService } from '../../services/modal.service';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-menu',
@@ -13,7 +15,7 @@ import { Router } from '@angular/router';
 export class MenuComponent {
   @Input() items: IMenuItem[] = [];
 
-  constructor(private _router: Router) { }
+  constructor(private _router: Router, private _modal: ModalService) { }
 
   onMenuItemClick(item: IMenuItem): void {
     console.log('item', item)
@@ -21,6 +23,7 @@ export class MenuComponent {
       this._router.navigateByUrl(item.route);
     } else if (item.type == ActionType.Dialog && item.data) {
       console.log('item.data', item.data);
+      this._modal.open(ConfirmationDialogComponent, {data: item.data})
     } else {
       item.action();
     }
